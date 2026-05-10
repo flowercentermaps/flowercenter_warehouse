@@ -12,4 +12,6 @@ abstract interface class StockCheckRepository {
 
   /// Mark the quotation as transferred via RPC.
   Future<void> markTransferred(int quotationId);
+
+  Future<void> sendForReview(int quotationId, {String? note});
 }

@@ -57,4 +57,32 @@ class StockCheckItem {
       );
 
   bool get isChecked => status != CheckStatus.pending;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'quotationItemId': quotationItemId,
+      'productName': productName,
+      'itemCode': itemCode,
+      'supplierCode': supplierCode,
+      'quantityNeeded': quantityNeeded,
+      'status': status.name,
+      'quantityAvailable': quantityAvailable,
+      'shortageReason': shortageReason,
+      'suggestion': suggestion,
+      'warehouseLocation': warehouseLocation,
+      'checkRowId': checkRowId,
+      'isChecked': isChecked,
+    };
+  }
+
+  void printDetails() {
+    toMap().forEach((key, value) {
+      print('$key: $value');
+    });
+  }
+
+  @override
+  String toString() {
+    return toMap().toString();
+  }
 }

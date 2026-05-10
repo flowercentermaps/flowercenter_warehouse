@@ -147,7 +147,7 @@ class WarehousePdfService {
           final statusColor = _statusColor(item.status);
           final qtyAvail = item.quantityAvailable != null
               ? qtyFmt.format(item.quantityAvailable)
-              : '—';
+              : '-';
           final notes = _notes(item);
 
           final bg = i.isOdd ? PdfColors.grey100 : PdfColors.white;
@@ -180,7 +180,7 @@ class WarehousePdfService {
                 ),
               ),
               _cell(qtyAvail, cellStyle, center: true),
-              _cell(item.warehouseLocation ?? '—', cellStyle),
+              _cell(item.warehouseLocation ?? '-', cellStyle),
               _cell(notes, cellStyle),
             ],
           );

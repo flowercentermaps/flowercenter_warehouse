@@ -126,6 +126,12 @@ class _StockItemCardState extends State<StockItemCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // TextButton(
+                      //   onPressed: () {
+                      //     item.printDetails();
+                      //   },
+                      //   child: const Icon(Icons.print),
+                      // ),
                       if (item.itemCode.isNotEmpty)
                         Text(
                           item.itemCode,

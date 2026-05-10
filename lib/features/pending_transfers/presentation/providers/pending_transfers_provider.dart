@@ -5,6 +5,7 @@ import '../../data/datasources/pending_transfers_remote_datasource.dart';
 import '../../data/repositories/pending_transfers_repository_impl.dart';
 import '../../domain/entities/pending_quotation.dart';
 import '../../domain/repositories/pending_transfers_repository.dart';
+import '../../../../services/notification_service.dart';
 
 // ── Dependency providers ───────────────────────────────────────────────────
 
@@ -21,12 +22,18 @@ final pendingTransfersRepositoryProvider = Provider<PendingTransfersRepository>(
 class PendingTransfersNotifier
     extends AsyncNotifier<List<PendingQuotation>> {
   RealtimeChannel? _channel;
+  Set<int> _knownIds = {};
+  bool _initialized = false;
 
   @override
   Future<List<PendingQuotation>> build() async {
     _setupRealtime();
     ref.onDispose(_cancelRealtime);
-    return _fetch();
+    final result = await _fetch();
+    // Seed known IDs so we only notify about arrivals after startup
+    _knownIds = result.map((q) => q.id).toSet();
+    _initialized = true;
+    return result;
   }
 
   Future<List<PendingQuotation>> _fetch() {
@@ -56,7 +63,27 @@ class PendingTransfersNotifier
   void _silentRefresh() {
     _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 400), () async {
+      final previousIds = _knownIds;
       state = await AsyncValue.guard(_fetch);
+
+      if (_initialized) {
+        final current = state.valueOrNull ?? [];
+        final currentIds = current.map((q) => q.id).toSet();
+        final newIds = currentIds.difference(previousIds);
+
+        for (final newId in newIds) {
+          final q = current.firstWhere((q) => q.id == newId);
+          NotificationService.instance.showNewRequestNotification(
+            id: newId,
+            quoteNo: q.quoteNo,
+            customerName: q.customerName.isNotEmpty
+                ? q.customerName
+                : q.companyName,
+          );
+        }
+
+        _knownIds = currentIds;
+      }
     });
   }
 
