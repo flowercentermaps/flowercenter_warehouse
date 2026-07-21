@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "989803453980",
+    "project_id": "flower-center-crm",
+    "storage_bucket": "flower-center-crm.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989803453980:android:85787ae6d652a90ab0c9d9",
+        "android_client_info": {
+          "package_name": "ae.flowercenter.crm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWnt6ZACgA7NTXRJRmdoW4U7om0qQ9sHc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989803453980:android:d721ab475fc0d683b0c9d9",
+        "android_client_info": {
+          "package_name": "com.flowercenter.flowercenter_warehouse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWnt6ZACgA7NTXRJRmdoW4U7om0qQ9sHc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

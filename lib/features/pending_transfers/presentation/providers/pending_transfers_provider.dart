@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../../core/services/seen_quotations_service.dart';
 import '../../data/datasources/pending_transfers_remote_datasource.dart';
 import '../../data/repositories/pending_transfers_repository_impl.dart';
 import '../../domain/entities/pending_quotation.dart';
@@ -32,6 +34,18 @@ class PendingTransfersNotifier
     final result = await _fetch();
     // Seed known IDs so we only notify about arrivals after startup
     _knownIds = result.map((q) => q.id).toSet();
+
+    // On the very first launch ever, mark all current pending quotations as
+    // already-seen so the warehouse doesn't open the app to a wall of gold
+    // dots for things that arrived weeks before installation. After that,
+    // only newly arriving quotations get the unread treatment.
+    final prefs = await SharedPreferences.getInstance();
+    const firstRunKey = 'warehouse_first_run_seeded_v1';
+    if (!(prefs.getBool(firstRunKey) ?? false)) {
+      await SeenQuotationsService.markManySeen(_knownIds);
+      await prefs.setBool(firstRunKey, true);
+    }
+
     _initialized = true;
     return result;
   }
@@ -79,6 +93,7 @@ class PendingTransfersNotifier
             customerName: q.customerName.isNotEmpty
                 ? q.customerName
                 : q.companyName,
+            urgent: q.urgent,
           );
         }
 

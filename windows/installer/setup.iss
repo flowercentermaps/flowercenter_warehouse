@@ -1,5 +1,5 @@
 #define MyAppName "Flower Center Warehouse"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "2.6.1"
 #define MyAppPublisher "Flower Center"
 #define MyAppURL "https://flowercenter.ae"
 #define MyAppExeName "flowercenter_warehouse.exe"
@@ -11,6 +11,7 @@ AppId={{B7C4D2E8-5F6A-4B7C-9D0E-1F2A3B4C5D6E}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
+
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
@@ -29,7 +30,7 @@ WizardStyle=modern
 
 CloseApplications=yes
 CloseApplicationsFilter=*{#MyAppExeName}
-
+ 
 PrivilegesRequired=admin
 PrivilegesRequiredOverridesAllowed=dialog
 

@@ -14,6 +14,7 @@ class NotificationService {
     required int id,
     required String quoteNo,
     String? customerName,
+    bool urgent = false,
   }) async {
     final body = [
       'Quotation $quoteNo',
@@ -23,7 +24,7 @@ class NotificationService {
 
     final notification = LocalNotification(
       identifier: 'quotation_$id',
-      title: 'New Stock Check Request',
+      title: urgent ? '🚨 URGENT Stock Check Request' : 'New Stock Check Request',
       body: body,
     );
     await notification.show();

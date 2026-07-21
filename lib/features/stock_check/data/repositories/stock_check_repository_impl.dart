@@ -15,8 +15,9 @@ class StockCheckRepositoryImpl implements StockCheckRepository {
       _ds.saveCheck(quotationId: quotationId, item: item);
 
   @override
-  Future<void> markTransferred(int quotationId) =>
-      _ds.markTransferred(quotationId);
+  Future<MarkTransferResult> markTransferred(int quotationId,
+          {String sellAs = 'hamasat'}) =>
+      _ds.markTransferred(quotationId, sellAs: sellAs);
 
   @override
   Future<void> sendForReview(int quotationId, {String? note}) =>
